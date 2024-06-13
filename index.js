@@ -1,9 +1,10 @@
 window.addEventListener("DOMContentLoaded", () => {
-  fetch("https://api.pexels.com/v1/search?query=people/", {
+  fetch("https://api.pexels.com/v1/search?query=cars/", {
     method: "get",
+    body: JSON.stringify(),
     headers: {
       authorization: "MO7q6g8cTiE9GkBeSLlBtHJp1eXZW1CSLtp4ShR6Ijpw9bPu1HcHqClF",
-      "Content-Type": "text/html; charset=utf-8",
+      "Content-Type": "applacation/json",
     },
   })
     .then((resp) => {
@@ -14,6 +15,14 @@ window.addEventListener("DOMContentLoaded", () => {
         throw new Error("Errore nel reperimento dati");
       }
     })
-    .then(() => {})
+    .then((carObj) => {
+      const row = document.getElementById("row-container");
+
+      carObj.photos.forEach((car) => {
+        const img = document.querySelector("#row-container > img");
+        img.src = car.src;
+        row.appendChild(img);
+      });
+    })
     .catch((err) => console.log(err));
 });
